@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.QuickContactBadge;
 
+import com.example.project1.Constants.AppConstants;
+
 public class MainActivity extends AppCompatActivity {
     Button playBtn;
 
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Initialize Stuff
+        AppConstants.initialization(this);
         playBtn = (Button) findViewById(R.id.buttonStartGame);
         // Listener
         playBtn.setOnClickListener(new View.OnClickListener() {

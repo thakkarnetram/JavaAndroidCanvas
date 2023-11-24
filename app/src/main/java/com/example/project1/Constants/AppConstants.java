@@ -11,24 +11,24 @@ import com.example.project1.Engine.GameEngine;
 public class AppConstants {
     static BitMapBank bitMapBank;
     public static int SCREEN_WIDTH, SCREEN_HEIGHT;
-    static int gravity;
-    static int VELOCITY_JUMP;
+    static public int gravity;
+    static public int VELOCITY_JUMP;
     static GameEngine gameEngine;
 
     public static void initialization(Context context) {
         setScreenSize(context);
-//        bitMapBank = new BitMapBank(context.getResources()); // TODO Constructor for BitMapBank
+        bitMapBank = new BitMapBank(context.getResources());
         gameEngine = new GameEngine();
-        AppConstants.gravity = 2;
+        AppConstants.gravity = 3;
         // -30
-        AppConstants.VELOCITY_JUMP = 30;
+        AppConstants.VELOCITY_JUMP = 120;
     }
 
     public static BitMapBank getBitMapBank() {
         return bitMapBank;
     }
 
-    public static GameEngine gameEngine() {
+    public static GameEngine getGameEngine() {
         return gameEngine;
     }
 

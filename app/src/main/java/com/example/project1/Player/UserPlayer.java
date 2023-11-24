@@ -11,7 +11,7 @@ public class UserPlayer {
         playerY = AppConstants.SCREEN_HEIGHT/2 - AppConstants.getBitMapBank().getPlayerHeight()/2;
         playerCurrentFrame= 0;
         playerVelocity = 0;
-        maxFrame = 4;
+        maxFrame = 2;
     }
 
     public int getPlayerX() {
