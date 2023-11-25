@@ -1,6 +1,8 @@
 package com.example.project1.View;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.ActionProvider;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -14,6 +16,7 @@ import com.example.project1.Thread.GameThread;
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     GameThread gameThread;
     private float playerPositionStartY;
+    private long touchStartTime;
 
     public GameView(Context context) {
         super(context);
@@ -62,21 +65,26 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         switch (action) {
-            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_DOWN:
+                // Save the initial touch position
                 playerPositionStartY = event.getY();
                 break;
-            case MotionEvent.ACTION_DOWN:
-                GameEngine.gameState = 1;
-                float playerTouchEndY = event.getY();
-                float playerSwipeY = playerTouchEndY - playerPositionStartY;
-                // Sensitivity
-                int velocity = (int) (-playerSwipeY * 0.1f);
+            case MotionEvent.ACTION_UP:
+                float deltaY = event.getY() - playerPositionStartY;
+                int sensitivity = 111;
+                int velocity = (int) (deltaY * sensitivity);
+                Log.e("TAG", "onTouchEvent: Velocity " + velocity );
                 AppConstants.getGameEngine().userPlayer.setPlayerVelocity(velocity);
+                playerPositionStartY = event.getY();
                 performClick();
                 break;
+//            case MotionEvent.ACTION_UP:
+//                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(0);
+//                break;
         }
         return true;
     }
+
 
     @Override
     public boolean performClick() {

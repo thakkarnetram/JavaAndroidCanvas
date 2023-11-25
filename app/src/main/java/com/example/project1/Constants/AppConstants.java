@@ -2,6 +2,7 @@ package com.example.project1.Constants;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -21,7 +22,7 @@ public class AppConstants {
         gameEngine = new GameEngine();
         AppConstants.gravity = 3;
         // -30
-        AppConstants.VELOCITY_JUMP = 120;
+        AppConstants.VELOCITY_JUMP = -20;
     }
 
     public static BitMapBank getBitMapBank() {
@@ -46,5 +47,7 @@ public class AppConstants {
         int height = displayMetrics.heightPixels;
         AppConstants.SCREEN_WIDTH = width;
         AppConstants.SCREEN_HEIGHT = height;
+//        Log.e("SCREEN HEIGHT", "setScreenSize: SCREEN HEIGHT -> "+ SCREEN_HEIGHT );
+//        Log.e("SCREEN WIDTH", "setScreenSize: SCREEN WIDTH -> "+ SCREEN_WIDTH );
     }
 }

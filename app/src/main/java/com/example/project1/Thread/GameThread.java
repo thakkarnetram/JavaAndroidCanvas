@@ -10,7 +10,7 @@ public class GameThread extends Thread {
     SurfaceHolder surfaceHolder;
     boolean isRunning;
     long startTime, loopTime;
-    long DELAY = 30;
+    long DELAY = 15;
 
     public GameThread(SurfaceHolder surfaceHolder) {
         this.surfaceHolder = surfaceHolder;
@@ -26,6 +26,7 @@ public class GameThread extends Thread {
                 synchronized (surfaceHolder) {
                     AppConstants.getGameEngine().updateDrawableBackGroundImage(canvas);
                     AppConstants.getGameEngine().updateDrawPlayer(canvas);
+                    AppConstants.getGameEngine().handleUserPlayerMovement();
                     surfaceHolder.unlockCanvasAndPost(canvas);
                 }
             }
