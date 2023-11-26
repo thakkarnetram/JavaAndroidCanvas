@@ -2,4 +2,6 @@
     <string name="app_name">project1</string>
     <string name="previewText">Test Canvas Game</string>
     <string name="playText">Click to Play</string>
+    <string name="gameOver">Game Over !</string>
+    <string name="playAgain">Play Again</string>
 </resources>

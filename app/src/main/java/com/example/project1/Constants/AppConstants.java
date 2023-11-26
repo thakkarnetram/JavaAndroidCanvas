@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Surface;
 import android.view.WindowManager;
 
 import com.example.project1.BitMap.BitMapBank;
@@ -19,10 +20,10 @@ public class AppConstants {
     public static void initialization(Context context) {
         setScreenSize(context);
         bitMapBank = new BitMapBank(context.getResources());
-        gameEngine = new GameEngine();
-        AppConstants.gravity = 3;
+        gameEngine = new GameEngine(context);
+        AppConstants.gravity = 1;
         // -30
-        AppConstants.VELOCITY_JUMP = -20;
+        AppConstants.VELOCITY_JUMP = 20;
     }
 
     public static BitMapBank getBitMapBank() {
@@ -34,20 +35,20 @@ public class AppConstants {
     }
 
     public static void setScreenSize(Context context) {
-        // getting the context (info) from device
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        // getting the default display size
         Display display = windowManager.getDefaultDisplay();
-        // getting the metrics
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        // adding the metrics in the display
         display.getMetrics(displayMetrics);
-        // adding values to variables
-        int width = displayMetrics.widthPixels;
-        int height = displayMetrics.heightPixels;
-        AppConstants.SCREEN_WIDTH = width;
-        AppConstants.SCREEN_HEIGHT = height;
-//        Log.e("SCREEN HEIGHT", "setScreenSize: SCREEN HEIGHT -> "+ SCREEN_HEIGHT );
-//        Log.e("SCREEN WIDTH", "setScreenSize: SCREEN WIDTH -> "+ SCREEN_WIDTH );
+        int rotation = display.getRotation();
+        boolean isLandscape = (rotation == Surface.ROTATION_90 || rotation == Surface.ROTATION_270);
+
+        if (isLandscape) {
+            // Swap width and height for landscape mode
+            AppConstants.SCREEN_WIDTH = displayMetrics.heightPixels;
+            AppConstants.SCREEN_HEIGHT = displayMetrics.widthPixels;
+        } else {
+            AppConstants.SCREEN_WIDTH = displayMetrics.widthPixels;
+            AppConstants.SCREEN_HEIGHT = displayMetrics.heightPixels;
+        }
     }
 }

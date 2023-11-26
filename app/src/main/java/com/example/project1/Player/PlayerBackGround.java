@@ -1,7 +1,7 @@
 package com.example.project1.Player;
 
 public class PlayerBackGround {
-    private int backGroundImageX, backGroundImageY, getBackGroundVelocity;
+    int backGroundImageX, backGroundImageY, getBackGroundVelocity;
 
     public PlayerBackGround() {
         backGroundImageX = 0;

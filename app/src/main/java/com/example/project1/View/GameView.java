@@ -15,8 +15,8 @@ import com.example.project1.Thread.GameThread;
 
 public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     GameThread gameThread;
-    private float playerPositionStartY;
-    private long touchStartTime;
+    float playerPositionStartY;
+    long touchStartTime;
 
     public GameView(Context context) {
         super(context);
@@ -61,26 +61,31 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread(surfaceHolder);
     }
 
-    @Override
+
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                // Save the initial touch position
-                playerPositionStartY = event.getY();
-                break;
             case MotionEvent.ACTION_UP:
-                float deltaY = event.getY() - playerPositionStartY;
-                int sensitivity = 111;
-                int velocity = (int) (deltaY * sensitivity);
-                Log.e("TAG", "onTouchEvent: Velocity " + velocity );
-                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(velocity);
-                playerPositionStartY = event.getY();
-                performClick();
+                // Touch released, set velocity to zero
+                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(0);
                 break;
-//            case MotionEvent.ACTION_UP:
-//                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(0);
-//                break;
+            case MotionEvent.ACTION_DOWN:
+                GameEngine.gameState = 1;
+                // Save the initial touch position and time
+                playerPositionStartY = event.getX();
+                touchStartTime = System.currentTimeMillis();
+                // Set a constant velocity for upward movement
+                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(-5);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                // No need to calculate deltaY in this case
+                // Adjust sensitivity based on your desired responsiveness
+                int sensitivity = 15;
+                // Calculate the velocity using a constant value for upward movement
+                int velocity = -sensitivity;
+                // Apply the velocity to the player's input velocity
+                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(velocity);
+                break;
         }
         return true;
     }
@@ -90,4 +95,25 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback {
     public boolean performClick() {
         return super.performClick();
     }
+
+    //    public boolean onTouchEvent(MotionEvent event) {
+//        int action = event.getAction();
+//        switch (action) {
+//            case MotionEvent.ACTION_UP:
+//                playerPositionStartY = event.getY();
+//                break;
+//            case MotionEvent.ACTION_DOWN:
+//                GameEngine.gameState = 1;
+//                float playerTouchEndY = event.getY();
+//                float playerSwipeY = playerTouchEndY - playerPositionStartY;
+//                // Sensitivity
+//                int velocity = (int) (-playerSwipeY * 0.1f);
+//                AppConstants.getGameEngine().userPlayer.setPlayerVelocity(velocity);
+//                performClick();
+//                break;
+//        }
+//        return true;
+//    }
+
 }
+
